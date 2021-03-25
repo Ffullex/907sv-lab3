@@ -1,51 +1,33 @@
 import React from 'react';
 import './App.css';
-
+import Header from './components/Header';
+import Item from './components/Item';
+import Form from './components/Form';
+import List from './components/List';
 function App() {
+  const [list, setList] = React.useState([]);
+
+  function add(value) {
+    const element = {
+      id: Math.random(),
+      title: value
+    };
+    setList([...list, element]);
+  }
+  function remove(id) {
+    setList([...list.filter(item => item.id !== id)]);
+  }
+
   return (
-    <div className="wrapper">
-      <div>
-        <h1>Список дел</h1>
-        <h2>Лабораторная №3. Список с фильтрацией</h2>
+    <>
+      <div className="wrapper">
+        <Header />
+        <Form handleSubmit={value => add(value)} />
+        <List list={list} deleteHandler={index => remove(index)} />
+
+        <Item />
       </div>
-      <div>
-        <input type="text" />
-        <button>Добавить</button>
-        <div>
-          <label>
-            Показывать только выполненные:
-            <input type="checkbox" />
-          </label>
-        </div>
-        <ul>
-          <li>
-            <input type="checkbox" />
-            Помыть пол
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Поиграть в футбол
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Покормить рыб
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Выгулять кошку
-            <button>[x]</button>
-          </li>
-          <li>
-            <input type="checkbox" />
-            Полить картошку
-            <button>[x]</button>
-          </li>
-        </ul>
-      </div>
-    </div>
+    </>
   );
 }
 
