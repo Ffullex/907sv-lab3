@@ -53,45 +53,39 @@
 * При вызове редьюсера с экшеном check возвращается состояние стора, в котором состояние указанного элемента изменено.
 ```jsx
 export const ACTION_TYPES = {
-    ADD: 'add',
-    /* тут ещё варианты */
+  ADD: 'add',
+  /* тут ещё варианты */
 };
-
 export const initialState = [];
-
 export function reducer(action, prevState = initialState) {
-    switch (action.type) {
-        case ACTION_TYPES.DELETE: {
-            return [...prevState.filter(item => item.id !== action.payload)];
-        }
-        /* тут ещё варианты */
-        default: return [...prevState];
+  switch (action.type) {
+    case ACTION_TYPES.DELETE: {
+      return [...prevState.filter(item => item.id !== action.payload)];
     }
-}
-
-export function selectFilteredList({list, isDone}) {
-    if (!isDone) return list;
-
-    return list.filter(element => element.isChecked);
-}
-
-// в App.jsx:
-  function dispatch(action) {
-    setList(reducer(action, list));
+          /* тут ещё варианты */
+    default: return [...prevState];
   }
+}
+export function selectFilteredList({list, isDone}) {
+  if (!isDone) return list;
+  return list.filter(element => element.isChecked);
+}
+// в App.jsx:
+function dispatch(action) {
+  setList(reducer(action, list));
+}
 // ...
-      <List
+<List
         list={selectFilteredList({list, isDone})}
         dispatch={dispatch}/>
-
 // в Item.jsx:
-        <button onClick={() => dispatch({type: ACTION_TYPES.DELETE, payload: id})}>
-            [x]
-        </button>
+<button onClick={() => dispatch({type: ACTION_TYPES.DELETE, payload: id})}>
+  [x]
+</button>
 ```
 
 ## Способ выполнения
-* Сделать форк этого репозитория. 
+* Сделать форк этого репозитория.
 * Разработку вести через TDD: вначале тесты, потом компонент.
 * Решение без тестов приниматься не будет.
 * Результат оформить в виде pull request.

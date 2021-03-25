@@ -15,7 +15,7 @@ test('Проверка, что поле ввода имеет корректну
 });
 
 test('Элемент списка отображает выбранный чекбокс ', () => {
-  // const checkedHandler = jest.fn();
+  const checkedHandler = jest.fn();
 
   render(<Item id={id} title={title} isChecked={true} />);
   const checkbox = screen.getByTestId('checkbox');
@@ -26,8 +26,20 @@ test('Элемент списка отображает выбранный чек
 test('Элемент списка отображает пустой чекбокс ', () => {
   const checkedHandler = jest.fn();
 
-  render(<Item id={id} title={title} checkedHandler={checkedHandler} />);
+  render(<Item id={id} title={title} isChecked={false} />);
   const checkbox = screen.getByTestId('checkbox');
   expect(checkbox).toBeInTheDocument();
   expect(checkbox).not.toHaveAttribute('checked');
+});
+
+test('При клике на чекбокс отображается нужный метод', () => {
+  const checkedHandler = jest.fn();
+
+  render(<Item id={id} title={title} isChecked={false} checkedHandler={checkedHandler} />);
+  const checkbox = screen.getByTestId('checkbox');
+  expect(checkbox).toBeInTheDocument();
+
+  expect(checkedHandler).not.toBeCalled();
+  fireEvent.click(checkbox);
+  expect(checkedHandler).toBeCalledWith(id, true);
 });

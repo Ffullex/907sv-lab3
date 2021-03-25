@@ -32,3 +32,7 @@ test('Список корректно отображает массив элем
   }
   expect(deleteHandler).toBeCalledTimes(list.length);
 });
+
+// test('При клике на чекбокс элемента вызывается checkHandler с нужными параметрами', () => {
+//
+// })
