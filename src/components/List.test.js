@@ -33,6 +33,20 @@ test('Список корректно отображает массив элем
   expect(deleteHandler).toBeCalledTimes(list.length);
 });
 
-// test('При клике на чекбокс элемента вызывается checkHandler с нужными параметрами', () => {
-//
-// })
+test('Элементы отображают чекбоксы в нужном состоянии', () => {
+  render(<List list={list} />);
+  const checkboxes = screen.getAllByTestId('checkbox');
+  for (let i = 0; i < checkboxes.length; i++) {
+    expect(checkboxes[i]).toHaveAttribute(list[i].isChecked ? 'checked' : 'type');
+  }
+});
+
+test('При клике на чекбокс элемента вызывается checkHandler с нужными параметрами', () => {
+  const checkedHandler = jest.fn();
+  render(<List list={list} checkedHandler={checkedHandler} />);
+  const checkboxes = screen.getAllByTestId('checkbox');
+  for (let i = 0; i < checkboxes.length; i++) {
+    fireEvent.click(checkboxes[i]);
+    expect(checkedHandler).toBeCalledWith(list[i].id, !list[i].isChecked);
+  }
+});
